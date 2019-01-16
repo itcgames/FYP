@@ -1,0 +1,26 @@
+<annotation>
+	<folder>+- strips</folder>
+	<filename>20190107_161058.jpg</filename>
+	<path>C:\Users\micha\Downloads\+- strips -20190108T091749Z-001\+- strips\20190107_161058.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>800</width>
+		<height>600</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>Negative</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>489</xmin>
+			<ymin>117</ymin>
+			<xmax>587</xmax>
+			<ymax>512</ymax>
+		</bndbox>
+	</object>
+</annotation>

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block the_body %}
+       <h2>GIP Strip Web App</h2>
+
+       <p>Welcome to my 4th Year Project!</p>
+
+       <p><img id="blah" alt="your image" width="400" height="400" /></p>
+
+
+
+       <form action="/processform" method="POST">
+       <input type="text" name="answer" id="code">
+       <p><input type="file"  onchange="encodeImageFileAsURL(this)"></p>
+       <p><input type="submit" value="Submit"></p>
+       </form>
+
+       <script>
+         function encodeImageFileAsURL(element) {
+
+           var file = element.files[0];
+           var reader = new FileReader();
+           reader.onloadend = function() {
+             console.log('RESULT', reader.result)
+             document.getElementById('code').value = reader.result
+             document.getElementById('blah').src = reader.result
+           }
+           reader.readAsDataURL(file);
+         }
+       </script>
+{% endblock %}
