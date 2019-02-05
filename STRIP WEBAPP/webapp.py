@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, session
+from flask import Flask, render_template, request, session, jsonify
 import objectDetector
 app = Flask(__name__)
 
@@ -6,6 +6,26 @@ app = Flask(__name__)
 def get_and_display_form():
     return render_template('index.html',
                            the_title="GIP Strip Result Detection", )
+
+
+@app.route('/objectdetection', methods=['POST'])
+def detect_object():
+    if not request.json or not 'image' in request.json:
+        abort(400)
+
+    file = request.json["image"]
+    for x in range(23):
+        file = file[1:]
+
+
+    result = objectDetector.Object_Detection(file.encode())
+
+    result = result.decode('UTF-8')
+    result = "data:image/jpeg;base64," + result
+
+    return jsonify({'result': result}), 201
+
+
 
 @app.route('/processform', methods=['POST'])
 def process_form():
