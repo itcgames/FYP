@@ -104,7 +104,31 @@ def detect_object():
 
     return jsonify(results = result), 201
 
+@app.route('/addEntry/<string:user_name>/<string:user_result>', methods=['POST'])
+def addEntry(user_name, user_result):
+    if not request.json or not 'image' in request.json:
+        abort(400)
 
+    file = request.json["image"]
+    for x in range(23):
+        file = file[1:]
+
+
+    result = objectDetector.Object_Detection(file.encode())
+    result['image'] = result['image'].decode('UTF-8')
+    result['image'] = "data:image/jpeg;base64," + result['image']
+    result['accuracy'] = int(result['accuracy'] * 100)
+
+    cursor = mydb.cursor()
+
+    sql = "INSERT INTO strip (userId,result,accuracy,photo,userResult) VALUES (%s, %s, %s ,%s ,%s)"
+    val = (user_name, result['name'][0].lower(), result['accuracy'], result['image'], user_result)
+
+    cursor.execute(sql, val)
+    mydb.commit()
+
+
+    return jsonify(results = result), 201
 
 @app.route('/processform', methods=['POST'])
 def process_form():
