@@ -64,6 +64,29 @@ def get_result(user_id):
     cursor.close()
     return jsonify(results = listOfResults)
 
+@app.route('/getuserresults/<string:user_name>', methods=['GET'])
+def get_user_results(user_name):
+    cursor = mydb.cursor()
+    sql_select_query = "select * from strip WHERE userId ='" + str(user_name) + "'"
+    cursor.execute(sql_select_query)
+    records = cursor.fetchall()
+    listOfResults = []
+    for row in records:
+        result = {
+        'id': row[0],
+        'userId': row[1],
+        'result': row[2],
+        'accuracy': row[3],
+        'photo': row[4].decode('UTF-8'),
+        'userResult': row[5],
+        'timestamp': row[6]
+        }
+        listOfResults.append(result)
+    cursor.close()
+    return jsonify(results = listOfResults)
+
+
+
 @app.route('/objectdetection', methods=['POST'])
 def detect_object():
     if not request.json or not 'image' in request.json:
