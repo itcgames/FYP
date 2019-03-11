@@ -84,6 +84,9 @@ def Object_Detection(b64String):
                 [detection_boxes, detection_scores, detection_classes, num_detections],
                 feed_dict={image_tensor: image_np_expanded})
                 # Visualization of the results of a detection.
+
+
+
             vis_util.visualize_boxes_and_labels_on_image_array(image_np,
                                                                 np.squeeze(boxes),
                                                                 np.squeeze(classes).astype(np.int32),
@@ -97,8 +100,13 @@ def Object_Detection(b64String):
             image = Image.merge("RGB", (r, g, b))
             image.save(buffered, format="JPEG")
             img_str = base64.b64encode(buffered.getvalue())
+            theResults = {
+            'name': [category_index.get(value) for index,value in enumerate(classes[0]) if scores[0,index] > 0.1][0]["name"],
+            'accuracy': scores[0,0],
+            'image': img_str
+            }
             print("Finished Object Detection")
-            return img_str
+            return theResults
             # end for
         # end with
     # end with
