@@ -23,7 +23,7 @@ def get_and_display_form():
 @app.route('/getHistory/<int:limit>', methods=['GET'])
 def get_history(limit):
     cursor = mydb.cursor()
-    sql_select_Query = "select * from strip LIMIT " + str(limit)
+    sql_select_Query = "SELECT * FROM strip ORDER BY ts DESC LIMIT " + str(limit)
     print(sql_select_Query)
     cursor.execute(sql_select_Query)
     records = cursor.fetchall()
