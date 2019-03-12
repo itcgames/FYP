@@ -123,7 +123,7 @@ def addEntry(user_name, user_result):
     cursor = mydb.cursor()
 
     sql = "INSERT INTO strip (userId,result,accuracy,photo,userResult) VALUES (%s, %s, %s ,%s ,%s)"
-    val = (user_name, result['name'][0].lower(), result['accuracy'], result['image'], user_result)
+    val = (user_name, result['name'][0].lower(), result['accuracy'], result['image'], user_result[0].lower())
 
     cursor.execute(sql, val)
     mydb.commit()
@@ -134,18 +134,25 @@ def addEntry(user_name, user_result):
 @app.route('/processform', methods=['POST'])
 def process_form():
     session['file'] = request.form["answer"]
+    session['userName'] = request.form["Username"]
+    session['userResult'] = request.form["UserResult"]
     for x in range(23):
         session['file'] = session['file'][1:]
 
 
     result = objectDetector.Object_Detection(session['file'].encode())
+    result['image'] = result['image'].decode('UTF-8')
+    result['image'] = "data:image/jpeg;base64," + result['image']
+    result['accuracy'] = int(result['accuracy'] * 100)
 
-    imageResult = result['image'].decode('UTF-8')
-    imageResult = "data:image/jpeg;base64," + imageResult
-    name = result['name']
-    accuracy = int(result['accuracy'] * 100)
+    cursor = mydb.cursor()
+
+    sql = "INSERT INTO strip (userId,result,accuracy,photo,userResult) VALUES (%s, %s, %s ,%s ,%s)"
+    val = (session['userName'], result['name'][0].lower(), result['accuracy'], result['image'], session['userResult'][0].lower())
+
+    cursor.execute(sql, val)
     return render_template('process.html',
-                           the_title="Process Results", the_result = imageResult, the_name = name, the_accuracy = accuracy )
+                           the_title="Process Results", the_result = result['image'], the_name = result['name'], the_accuracy = result['accuracy'] )
 
 
 
