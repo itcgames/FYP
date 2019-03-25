@@ -100,11 +100,18 @@ def Object_Detection(b64String):
             image = Image.merge("RGB", (r, g, b))
             image.save(buffered, format="JPEG")
             img_str = base64.b64encode(buffered.getvalue())
-            theResults = {
-            'name': [category_index.get(value) for index,value in enumerate(classes[0]) if scores[0,index] > 0.1][0]["name"],
-            'accuracy': scores[0,0],
-            'image': img_str
-            }
+            if len([category_index.get(value) for index,value in enumerate(classes[0]) if scores[0,index] > 0.4]) > 0:
+                theResults = {
+                'name': [category_index.get(value) for index,value in enumerate(classes[0]) if scores[0,index] > 0.4][0]["name"],
+                'accuracy': scores[0,0],
+                'image': img_str
+                }
+            else:
+                theResults = {
+                'name': "No Result Detected",
+                'accuracy': 0,
+                'image': img_str
+                }
             print("Finished Object Detection")
             return theResults
             # end for
