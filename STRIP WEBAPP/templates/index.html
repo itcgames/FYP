@@ -10,11 +10,11 @@
 
 
        <form action="/processform" method="POST">
-       <input type="text" name="answer" id="code">
+       <input type="text" name="answer" id="code" hidden>
        <p><input type="file"  onchange="encodeImageFileAsURL(this)"></p>
-       Username: <input type="text" name="Username" value=""><br>
+       Username: <input type="text" name="Username" value="" required><br>
        <p></p>
-       Result: <input type="text" name="UserResult" value=""><br>
+       Result: <input type="text" name="UserResult" value="" required><br>
        <p><input type="submit" value="Submit"></p>
        </form>
 
