@@ -5,11 +5,11 @@
 
        <p>Welcome to my 4th Year Project!</p>
 
-       <p><img id="blah" alt="your image" width="400" height="400" /></p>
+       <p><img id="blah" alt="your image" width="400" height="400" hidden /></p>
 
 
 
-       <form action="/processform" method="POST">
+       <form action="/results" method="POST">
        <input type="text" name="answer" id="code" hidden>
        <p><input type="file"  onchange="encodeImageFileAsURL(this)"></p>
        Username: <input type="text" name="Username" value="" required><br>
@@ -27,6 +27,7 @@
              console.log('RESULT', reader.result)
              document.getElementById('code').value = reader.result
              document.getElementById('blah').src = reader.result
+             document.getElementById('blah').removeAttribute("hidden")
            }
            reader.readAsDataURL(file);
          }

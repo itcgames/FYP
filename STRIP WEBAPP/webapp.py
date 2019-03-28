@@ -13,7 +13,7 @@ mydb = mysql.connector.connect(
 )
 
 
-@app.route('/getform')
+@app.route('/home')
 def get_and_display_form():
     return render_template('index.html',
                            the_title="GIP Strip Result Detection", )
@@ -131,7 +131,7 @@ def addEntry(user_name, user_result):
 
     return jsonify(results = result), 201
 
-@app.route('/processform', methods=['POST'])
+@app.route('/results', methods=['POST'])
 def process_form():
     session['file'] = request.form["answer"]
     session['userName'] = request.form["Username"]
