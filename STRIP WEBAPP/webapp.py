@@ -5,13 +5,15 @@ from flask import Flask, render_template, request, session, jsonify
 import objectDetector
 import mysql.connector
 
+
+SESSION_TYPE = 'filesystem'
 app = Flask(__name__)
 
 # Connect to mySql database (Note: FILL IN PASSWORD)
 mydb = mysql.connector.connect(
   host="127.0.0.1",
   user="root",
-  passwd="",
+  passwd="pizza123",
   database="results"
 )
 
@@ -96,9 +98,8 @@ def detect_object():
 
 
     result = objectDetector.Object_Detection(file.encode()) # perform the actual object detection on the image
-    #result['image'] = result['image'].decode('UTF-8') # decode b64 string (result image)
     result['image'] = "data:image/jpeg;base64," + result['image'] # add this string to beginning of the b64 string
-    result['accuracy'] = int(result['accuracy'] * 100) # result is between 0-1, Im converting it to a percentage for readability
+    result['accuracy'] = int(result['accuracy'] * 100) # result is between 0-1, Im converting it to a percentage for readability and consistency with the image
 
     return jsonify(results = result), 201
 
@@ -116,9 +117,8 @@ def addEntry(user_name, user_result):
 
 
     result = objectDetector.Object_Detection(file.encode()) # perform the actual object detection on the image
-    #result['image'] = result['image'].decode('UTF-8') # decode b64 string (result image)
     result['image'] = "data:image/jpeg;base64," + result['image'] # add this string to beginning of the b64 string
-    result['accuracy'] = int(result['accuracy'] * 100) # result is between 0-1, Im converting it to a percentage for readability
+    result['accuracy'] = int(result['accuracy'] * 100) # result is between 0-1, Im converting it to a percentage for readability and consistency with the image
 
     cursor = mydb.cursor()
 
@@ -145,9 +145,8 @@ def process_form():
 
 
     result = objectDetector.Object_Detection(session['file'].encode()) # perform the actual object detection on the image
-    #result['image'] = result['image'].decode('UTF-8') # decode b64 string (result image)
     result['image'] = "data:image/jpeg;base64," + result['image'] # add this string to beginning of the b64 string
-    result['accuracy'] = int(result['accuracy'] * 100) # result is between 0-1, Im converting it to a percentage for readability
+    result['accuracy'] = int(result['accuracy'] * 100) # result is between 0-1, Im converting it to a percentage for readability and consistency with the image
 
     cursor = mydb.cursor()
 
