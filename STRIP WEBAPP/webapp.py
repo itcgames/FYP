@@ -5,17 +5,19 @@ from flask import Flask, render_template, request, session, jsonify
 import objectDetector
 import mysql.connector
 
-
-SESSION_TYPE = 'filesystem'
 app = Flask(__name__)
 
 # Connect to mySql database (Note: FILL IN PASSWORD)
 mydb = mysql.connector.connect(
   host="127.0.0.1",
   user="root",
-  passwd="pizza123",
+  passwd="",
   database="results"
 )
+
+####################################################################################################################################################################################
+
+#Rest API routes
 
 # Function that takes mySql records and
 # appends them to a list of results
@@ -33,15 +35,6 @@ def create_list(records):
         }
         listOfResults.append(result) # put into the list
     return listOfResults
-
-
-
-# Home page for demo web application.
-@app.route('/home')
-def get_and_display_form():
-    return render_template('index.html',
-                           the_title="GIP Strip Result Detection", )
-
 
 # This will send JSON containing the last entries in the database. The amount
 # of entries will be based on <int:limit>.
@@ -130,6 +123,16 @@ def addEntry(user_name, user_result):
 
 
     return jsonify(results = result), 201
+
+####################################################################################################################################################################################
+
+#Demo Webapp routes
+
+# Home page for demo web application.
+@app.route('/home')
+def get_and_display_form():
+    return render_template('index.html',
+                           the_title="GIP Strip Result Detection", )
 
 # Results page of the demo web application
 @app.route('/results', methods=['POST'])
