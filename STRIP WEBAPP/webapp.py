@@ -31,7 +31,8 @@ def create_list(records):
         'accuracy': row[3],
         'photo': row[4].decode('UTF-8'), # decode b64 string
         'userResult': row[5],
-        'timestamp': row[6]
+        'timestamp': row[6],
+        'modelVersion': row[7]
         }
         listOfResults.append(result) # put into the list
     return listOfResults
@@ -115,8 +116,8 @@ def addEntry(user_name, user_result):
 
     cursor = mydb.cursor()
 
-    sql = "INSERT INTO strip (userId,result,accuracy,photo,userResult) VALUES (%s, %s, %s ,%s ,%s)" # sql query
-    val = (user_name, result['name'][0].lower(), result['accuracy'], result['image'], user_result[0].lower())
+    sql = "INSERT INTO strip (userId,result,accuracy,photo,userResult,modelVersion) VALUES (%s, %s, %s ,%s ,%s, %s)" # sql query
+    val = (user_name, result['name'][0].lower(), result['accuracy'], result['image'], user_result[0].lower(), objectDetector.Get_Model_Version())
 
     cursor.execute(sql, val)
     mydb.commit() # commit change to the database
@@ -153,8 +154,8 @@ def process_form():
 
     cursor = mydb.cursor()
 
-    sql = "INSERT INTO strip (userId,result,accuracy,photo,userResult) VALUES (%s, %s, %s ,%s ,%s)" # sql query
-    val = (session['userName'], result['name'][0].lower(), result['accuracy'], result['image'], session['userResult'][0].lower())
+    sql = "INSERT INTO strip (userId,result,accuracy,photo,userResult, modelVersion) VALUES (%s, %s, %s ,%s ,%s, %s)" # sql query
+    val = (session['userName'], result['name'][0].lower(), result['accuracy'], result['image'], session['userResult'][0].lower(), objectDetector.Get_Model_Version())
 
     cursor.execute(sql, val)
     mydb.commit() # commit change to the database

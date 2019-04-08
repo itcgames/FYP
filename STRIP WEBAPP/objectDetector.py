@@ -21,7 +21,14 @@ FROZEN_INFERENCE_GRAPH_LOC = os.getcwd() + "/inference_graph/frozen_inference_gr
 LABELS_LOC = os.getcwd() + "/" + "label_map.pbtxt"
 NUM_CLASSES = 2
 
+MODEL_VERSION = 'Version 1'
+
 #######################################################################################################################
+
+def Get_Model_Version():
+    return MODEL_VERSION
+
+
 
 
 # load a (frozen) TensorFlow model into memory
