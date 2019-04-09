@@ -15,10 +15,6 @@ mydb = mysql.connector.connect(
   database="results"
 )
 
-####################################################################################################################################################################################
-
-#Rest API routes
-
 # Function that takes mySql records and
 # appends them to a list of results
 def create_list(records):
@@ -36,6 +32,10 @@ def create_list(records):
         }
         listOfResults.append(result) # put into the list
     return listOfResults
+
+####################################################################################################################################################################################
+
+# Rest API routes
 
 # This will send JSON containing the last entries in the database. The amount
 # of entries will be based on <int:limit>.
