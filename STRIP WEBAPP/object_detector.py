@@ -1,6 +1,6 @@
 # Author: Michael Bridgette
 # Description: Script for performing the actual object detection on an image
-# Date of last edit: 04/04/2019
+# Date of last edit: 10/04/2019
 
 import numpy as np
 import os
@@ -21,12 +21,12 @@ FROZEN_INFERENCE_GRAPH_LOC = os.getcwd() + "/inference_graph/frozen_inference_gr
 LABELS_LOC = os.getcwd() + "/" + "label_map.pbtxt"
 NUM_CLASSES = 2
 
-MODEL_VERSION = 'Version 1' # The version of the object detection model being used
+MODEL_VERSION = 'Version 1'     # The version of the object detection model being used
 
 #######################################################################################################################
 
 # Returns the model version string
-def Get_Model_Version():
+def GET_MODEL_VERSION():
     return MODEL_VERSION
 
 
@@ -39,25 +39,25 @@ with detection_graph.as_default():
     with tf.gfile.GFile(FROZEN_INFERENCE_GRAPH_LOC, 'rb') as fid:
         serialized_graph = fid.read()
         od_graph_def.ParseFromString(serialized_graph)
-        tf.import_graph_def(od_graph_def, name='')
+        tf.import_graph_def(od_graph_def, name = '')
 
 # Loading label map
 # Label maps map indices to category names, so that when our convolution network predicts `1`, we know that this corresponds to `Negative`
 label_map = label_map_util.load_labelmap(LABELS_LOC)
-categories = label_map_util.convert_label_map_to_categories(label_map, max_num_classes=NUM_CLASSES, use_display_name=True)
+categories = label_map_util.convert_label_map_to_categories(label_map, max_num_classes = NUM_CLASSES, use_display_name = True)
 category_index = label_map_util.create_category_index(categories)
 
 # Takes b64 string, constructs an image, performs object detection, encode image back to b64 and return
 # a dictionary with the image, accuracy and result
-def Object_Detection(b64String):
+def object_detection(b64String):
     with detection_graph.as_default():
         with tf.Session(graph=detection_graph) as sess:
 
-            imgdata = base64.b64decode(b64String) # decode string
+            imgdata = base64.b64decode(b64String)       # decode string
 
             theImage = Image.open(BytesIO(imgdata))
             b, g, r = theImage.split()
-            Testimage = Image.merge("RGB", (r, g, b)) # fixing colours of the image
+            Testimage = Image.merge("RGB", (r, g, b))       # fixing colours of the image
             image_np = np.array(Testimage)
 
             # Definite input and output Tensors for detection_graph
@@ -87,9 +87,9 @@ def Object_Detection(b64String):
             buffered = BytesIO()
             im = Image.fromarray(image_np,"RGB")
             b, g, r = im.split()
-            image = Image.merge("RGB", (r, g, b)) # fixing colours of the image once again
+            image = Image.merge("RGB", (r, g, b))       # fixing colours of the image once again
             image.save(buffered, format="JPEG")
-            img_str = base64.b64encode(buffered.getvalue()) # encode the result image
+            img_str = base64.b64encode(buffered.getvalue())     # encode the result image
 
             # check for any detections before creating dictionary object
             # if the accuracy is under 0.4 (40%) Im choosing to basically consider this as no detection at all as its quite a low score
@@ -101,7 +101,7 @@ def Object_Detection(b64String):
                 }
             else:
                 theResults = {
-                'name': "No Result Detected",
+                'name': "Invalid Image, No Result Detected",
                 'accuracy': 0,
                 'image': img_str.decode('UTF-8')
                 }
