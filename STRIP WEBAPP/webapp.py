@@ -12,7 +12,7 @@ app = Flask(__name__)
 mydb = mysql.connector.connect(
   host = "127.0.0.1",
   user = "root",
-  passwd = "pizza123",
+  passwd = "",
   database = "results"
 )
 
@@ -127,7 +127,7 @@ def addEntry(user_name, user_result):
 
 ####################################################################################################################################################################################
 
-#Demo Webapp routes
+# Demo Webapp routes
 
 # Home page for demo web application.
 @app.route('/home')
