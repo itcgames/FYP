@@ -1,0 +1,15 @@
+version: '3.3'
+
+services:
+
+ scanner-server:
+   build:
+    context: ../
+    dockerfile: Docker/ServerDockerfile
+   restart: always
+   ports:
+    - 5000:5000
+   volumes:
+    - ../STRIP WEBAPP:/app/STRIP WEBAPP
+    - ../Object Detection Models:/app/Object Detection Models
+   tty: true

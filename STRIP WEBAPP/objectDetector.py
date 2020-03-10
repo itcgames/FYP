@@ -5,7 +5,7 @@
 import numpy as np
 import os
 import tensorflow as tf
-import cv2
+#import cv2
 import base64
 from PIL import Image
 from io import BytesIO
