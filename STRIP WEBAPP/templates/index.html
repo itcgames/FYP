@@ -11,7 +11,7 @@
 
        <form action="/results" method="POST">
        <input type="text" name="answer" id="code" hidden>
-       <p><input type="file"  onchange="encodeImageFileAsURL(this)"></p>
+       <p><input type="file" accept=".jpeg, .jpg"  onchange="encodeImageFileAsURL(this)" required></p>
        Username: <input type="text" name="Username" value="" required><br>
        <p></p>
        Result: <input type="text" name="UserResult" value="" required><br>
