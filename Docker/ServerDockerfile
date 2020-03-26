@@ -1,4 +1,4 @@
-FROM tensorflow/tensorflow:latest-py3
+FROM tensorflow/tensorflow:1.15.2-py3
 
 ENV PYTHONPATH="$PYTHONPATH:/app/models:/app/models/research:/app/models/research/slim:/app/models/research/object_detection"
 

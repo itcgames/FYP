@@ -1,6 +1,4 @@
 FROM ubuntu:16.04
-ENV http_proxy http://proxycw1.itcarlow.ie:8080/
-ENV https_proxy http://proxycw1.itcarlow.ie:8080/
 RUN apt-get update
 RUN apt-get install -y build-essential apt-utils
 RUN apt-get install -y python-opencv

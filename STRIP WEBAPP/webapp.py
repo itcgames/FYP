@@ -3,7 +3,6 @@
 # Date of last edit: 10/04/2019
 from flask import Flask, render_template, request, session, jsonify
 
-import objectDetector
 #import mysql.connector
 
 import object_detector

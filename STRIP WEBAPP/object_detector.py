@@ -9,7 +9,7 @@ import tensorflow as tf
 import base64
 from PIL import Image
 from io import BytesIO
-from scipy.misc import toimage
+#from scipy.misc import toimage
 
 from utils import label_map_util
 from utils import visualization_utils as vis_util
